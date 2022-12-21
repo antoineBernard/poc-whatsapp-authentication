@@ -1,7 +1,32 @@
 import logo from './logo.svg';
 import './App.css';
 
-function App() {
+import React, { useEffect, useState,  } from 'react';
+import consumer from './cable'
+
+const App = props => {
+  const [oauthPayload, setoauthPayload] = useState({})
+  
+  useEffect(() => {
+    console.log('component is mount');
+
+    consumer.subscriptions.create
+    (
+      {
+        channel: 'AuthenticationChannel',
+        uuid: '666',
+      },
+      {
+        received: (newOauthPayload) => {
+          console.log('setoauthPayload');
+          setoauthPayload(newOauthPayload)
+          console.log(oauthPayload);
+        }
+      }
+    )
+  })
+
+
   return (
     <div className="App">
       <header className="App-header">
